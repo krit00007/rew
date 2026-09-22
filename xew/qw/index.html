@@ -3,70 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic GitHub Content Loader</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            padding: 20px;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-        #content {
-            padding: 15px;
-            background: #ffffff;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .error-msg {
-            color: #d9534f;
-            font-weight: bold;
-        }
-        .missing-msg {
-            color: #f0ad4e;
-            font-weight: bold;
-        }
-    </style>
+    <title>Redirecting...</title>
 </head>
 <body>
 
-    <h2>Dynamic Payload Viewer</h2>
-    <!-- The content fetched from GitHub will be displayed here -->
-    <div id="content">Loading payload from GitHub Pages...</div>
+    <h2>Please wait, you are being redirected...</h2>
 
     <script>
-        // 1. Parse the URL query string parameters
+        // 1. Get the parameter from the URL
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
         const vParam = urlParams.get('v');
 
-        // 2. Target the content injection element
-        const contentDiv = document.getElementById('content');
-
-        // 3. Execution logic based on the presence of the parameter
-        if (vParam) {
-            // FIXED: Added the complete GitHub Pages path and the missing '\$' sign for the variable
-            const targetUrl = `https://github.io{vParam}.html`;
-
-            fetch(targetUrl)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`File not found or HTTP status error: ${response.status}`);
-                    }
-                    return response.text();
-                })
-                .then(data => {
-                    // Inject the structural remote HTML file safely onto the webpage view
-                    contentDiv.innerHTML = data;
-                })
-                .catch(error => {
-                    // Output explicit network or missing resource errors
-                    contentDiv.innerHTML = `<span class="error-msg">Error fetching content: ${error.message}</span>`;
-                });
+        // 2. If the parameter is 'free-game', redirect immediately
+        if (vParam === 'free-game') {
+            window.location.href = "https://shototaagro.shop";
+        } else if (vParam) {
+            // Dynamic redirect based on any other parameter name
+            window.location.href = `https://shototaagro.shop${vParam}`;
         } else {
-            // Default structural message displayed when no parameter is present in the link routing
-            contentDiv.innerHTML = '<span class="missing-msg">Missing parameter. Please use ?v=filename in the URL configuration.</span>';
+            document.body.innerHTML = "<h2>Error: Missing routing parameter.</h2>";
         }
     </script>
 
